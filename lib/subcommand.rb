@@ -121,7 +121,7 @@ module Subcommands
       # print aliases
       unless @aliases.empty?
         cmdtext << "\n\nAliases: \n" 
-        @aliases.each_pair { |name, val| cmdtext << "   #{name} - #{val}"  }
+        @aliases.each_pair { |name, val| cmdtext << "   #{name} - #{val}\n"  }
       end
 
       cmdtext << "\n\nSee '#{$0} help COMMAND' for more information on a specific command."
@@ -136,15 +136,24 @@ module Subcommands
     @global.order!
     cmd = ARGV.shift
     if cmd
-      #puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
+      puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
       sc = @commands[cmd] 
       #puts "sc: #{sc}: #{@commands}"
-      #puts "sc: ="+@commands.include?(cmd)
       unless sc
         # see if an alias exists
         alas = @aliases[cmd]
-        sc = @commands[alas] if alas
-        cmd = alas if alas
+        if alas
+          case alas
+          when Array
+            cmd = alas.shift
+            puts "Array cmd: #{cmd} "
+            ARGV.unshift alas.shift
+            puts "ARGV  #{ARGV} "
+          else
+          end
+        end
+        sc = @commands[cmd] if cmd
+        #cmd = alas if alas
       end
       # if valid command parse the args
       if sc
@@ -166,13 +175,16 @@ module Subcommands
           end
         else
           # invalid command 
-            puts "Invalid command: #{cmd}"
+          puts "Invalid command: #{cmd}"
           puts @global 
         end
         exit 0
       end
     end
     return @command_name
+  end
+  def alias_command name, *args
+    @aliases[name.to_s] = args
   end
 end
 
