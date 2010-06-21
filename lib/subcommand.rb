@@ -43,6 +43,7 @@
 #
 #    4. As before, handle ARGS and options hash.
 #
+# TODO: add aliases for commands
 ######################################
 require 'optparse'
 
@@ -55,10 +56,20 @@ end
 module Subcommands
   ##
   # specify a single command and all its options
+  # If multiple names are given, they are treated as aliases.
   # Do repeatedly for each command
   # Yields the optionparser
-  def command name
+  def command *names
+    #puts "inside command with #{names} "
+    name = names.shift
     @commands ||= {}
+    @aliases ||= {}
+    if names.length > 0
+      names.each do |n| 
+        #puts "aliases #{n} => #{name} "
+        @aliases[n.to_s] = name.to_s
+      end
+    end
     opt = lambda { OptionParser.new do |opts|
       yield opts
       # append desc to banner in next line
@@ -102,7 +113,15 @@ module Subcommands
         desc = opt.call.description
         cmdtext << "\n   #{c} : #{desc}"
       end
+      
+      # print aliases
+      unless @aliases.empty?
+        cmdtext << "\n\nAliases: \n" 
+        @aliases.each_pair { |name, val| cmdtext << "   #{name} - #{val}"  }
+      end
+
       cmdtext << "\n\nSee '#{$0} help COMMAND' for more information on a specific command."
+
       global_options do |opts|
         # lets add the description user gave into banner
         opts.banner << "\n#{opts.description}\n" if opts.description
@@ -114,11 +133,17 @@ module Subcommands
     cmd = ARGV.shift
     if cmd
       #puts "Command: #{cmd} "
-      sc = @commands[cmd]
+      sc = @commands[cmd] 
+      unless sc
+        # see if an alias exists
+        #puts "sc nil #{@aliases} "
+        alas = @aliases[cmd]
+        #puts "sc nil #{alas} "
+        sc = @commands[alas] if alas
+        #puts "sc nil #{sc} "
+      end
       # if valid command parse the args
       if sc
-        #sc.order! 
-        #puts " 2222 calling sc"
         sc.call.order!
       else
         # else if help <command> then print its help GIT style (3)
@@ -155,7 +180,7 @@ if __FILE__ == $PROGRAM_NAME
     end
   end
   # define a command
-  command :foo do |opts|
+  command :foo, :goo do |opts|
     opts.banner = "Usage: foo [options]"
     opts.description = "desc for foo"
     opts.on("-f", "--[no-]force", "force verbosely") do |v|
