@@ -141,20 +141,7 @@ module Subcommands
       #puts "sc: #{sc}: #{@commands}"
       unless sc
         # see if an alias exists
-        alas = @aliases[cmd]
-        if alas
-          case alas
-          when Array
-            cmd = alas.shift
-            $stderr.puts "1Array cmd: #{cmd}, alas: #{alas} "
-            ARGV.unshift alas.shift unless alas.empty?
-            $stderr.puts "1ARGV  #{ARGV} "
-          else
-            cmd = alas
-          end
-        end
-        sc = @commands[cmd] if cmd
-        #cmd = alas if alas
+        sc, cmd = _check_alias cmd
       end
       # if valid command parse the args
       if sc
@@ -168,7 +155,7 @@ module Subcommands
           sc = @commands[cmd]
           # if valid command print help, else print global help
           unless sc
-            sc = _check_alias cmd
+            sc, cmd = _check_alias cmd
           end
           if sc
             #puts " 111 help #{cmd}"
@@ -206,6 +193,7 @@ module Subcommands
       end
     end
     sc = @commands[cmd] if cmd
+    return sc, cmd
   end
 end
 
