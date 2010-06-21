@@ -1,6 +1,19 @@
 = subcommand
 
-Description goes here.
+A tiny wrapper over ruby's awesome OptionParser (standard) which gives easy facility of subcommands.
+It has a similar interface to git and prints subcommands summary as well.
+
+e.g
+Assuming a program "prog" with subcommands "del" and "add"
+
+    prog help
+    prog --help
+
+    prog help del
+    prog del --help
+
+    prog del --force file.a
+    prog --verbose del --force file.a
 
 == Note on Patches/Pull Requests
  
