@@ -15,6 +15,42 @@ Assuming a program "prog" with subcommands "del" and "add"
     prog del --force file.a
     prog --verbose del --force file.a
 
+== Examples
+
+ if a program has subcommands foo and baz
+
+     ruby opt.rb help
+     ruby opt.rb --help
+     ruby opt.rb help foo
+     ruby opt.rb foo --help
+     ruby opt.rb baz --quiet "some text"
+     ruby opt.rb --verbose foo --force file.zzz
+
+ == STEPS 
+
+    1. define global_options (optional)
+
+     global_options do |opts|
+       opts.banner = "Usage: opt.rb [options] [subcommand [options]]"
+       opts.description = "Stupid program that does something"
+       opts.separator ""
+       opts.separator "Global options are:"
+       opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+         options[:verbose] = v
+       end
+     end
+
+    2. define commands using command().
+     command :foo do |opts|
+       opts.banner = "Usage: foo [options]"
+       opts.description = "desc for foo"
+       opts.on("-f", "--[no-]force", "force verbosely") do |v|
+         options[:force] = v
+       end
+     end
+
+    3. call opt_parse()
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
