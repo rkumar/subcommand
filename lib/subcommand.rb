@@ -3,6 +3,8 @@
 # A tiny wrapper over optparse that gives easy subcommand facility.
 # It also neatly prints help for global and subcommands
 # as well as summarizes subcommands in global help.
+#
+# Thanks to Robert Klemme for his idea on lazy loading the subcommand option parsers.
 # 
 # @author Rahul Kumar, Jun  2010
 # @date 2010-06-20 22:33 
@@ -70,6 +72,7 @@ module Subcommands
         @aliases[n.to_s] = name.to_s
       end
     end
+    # Thanks to Robert Klemme for the lazy loading idea.
     opt = lambda { OptionParser.new do |opts|
       yield opts
       # append desc to banner in next line

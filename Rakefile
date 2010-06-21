@@ -5,12 +5,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "subcommand"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "rahulbenegal@gmail.com"
+    gem.summary = %Q{A tiny wrapper over OptionParser giving simple, elegant subcommand facility}
+    gem.description = %Q{Subcommand and alias facility for command line programs with elegant help printing}
+    gem.email = "sentinel.1879@gmail.com"
     gem.homepage = "http://github.com/rkumar/subcommand"
     gem.authors = ["Rahul Kumar"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    #gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_development_dependency "yard", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
