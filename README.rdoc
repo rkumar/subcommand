@@ -32,7 +32,7 @@ Assuming a program "prog" with subcommands "del" and "add"
      ruby opt.rb baz --quiet "some text"
      ruby opt.rb --verbose foo --force file.zzz
 
- == STEPS 
+== STEPS 
 
     1. define global_options (optional)
 
