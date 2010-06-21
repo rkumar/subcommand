@@ -136,7 +136,7 @@ module Subcommands
     @global.order!
     cmd = ARGV.shift
     if cmd
-      $stderr.puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
+      #$stderr.puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
       sc = @commands[cmd] 
       #puts "sc: #{sc}: #{@commands}"
       unless sc
@@ -151,7 +151,7 @@ module Subcommands
         # else if help <command> then print its help GIT style (3)
         if !ARGV.empty? && cmd == "help"
           cmd = ARGV.shift
-          $stderr.puts " 110 help #{cmd}"
+          #$stderr.puts " 110 help #{cmd}"
           sc = @commands[cmd]
           # if valid command print help, else print global help
           unless sc
@@ -180,14 +180,14 @@ module Subcommands
   end
   def _check_alias cmd
     alas = @aliases[cmd]
-    $stderr.puts "195 alas: #{alas} "
+    #$stderr.puts "195 alas: #{alas} "
     if alas
       case alas
       when Array
         cmd = alas.shift
-        $stderr.puts "Array cmd: #{cmd} "
+        #$stderr.puts "Array cmd: #{cmd} "
         ARGV.unshift alas.shift unless alas.empty?
-        $stderr.puts "ARGV  #{ARGV} "
+        #$stderr.puts "ARGV  #{ARGV} "
       else
         cmd = alas
       end
