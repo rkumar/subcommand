@@ -59,6 +59,9 @@ Assuming a program "prog" with subcommands "del" and "add"
      # aliases init and create
      command :init, :create do |opts| ...
 
+     alias_command :zoo, 'foo' , '-f'
+     alias_command :bar, 'baz' , 'ruby.txt'
+
     3. call opt_parse()
 
 == Sample Output
