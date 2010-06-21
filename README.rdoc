@@ -3,6 +3,12 @@
 A tiny wrapper over ruby's awesome OptionParser (standard) which gives easy facility of subcommands.
 It has a similar interface to git and prints subcommands summary as well.
 
+== Features:
+
+1. subcommands using all of OptionParser's features
+2. aliases for subcommands
+
+
 e.g
 Assuming a program "prog" with subcommands "del" and "add"
 
@@ -40,7 +46,8 @@ Assuming a program "prog" with subcommands "del" and "add"
        end
      end
 
-    2. define commands using command().
+    2. define commands using command(). Send multiple names for aliases.
+
      command :foo do |opts|
        opts.banner = "Usage: foo [options]"
        opts.description = "desc for foo"
@@ -48,6 +55,9 @@ Assuming a program "prog" with subcommands "del" and "add"
          options[:force] = v
        end
      end
+
+     # aliases init and create
+     command :init, :create do |opts| ...
 
     3. call opt_parse()
 
