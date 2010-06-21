@@ -12,12 +12,12 @@
 # @examples
 # if a program has subcommands foo and baz
 #
-# ruby opt.rb help
-# ruby opt.rb --help
-# ruby opt.rb help foo
-# ruby opt.rb foo --help
-# ruby opt.rb baz --quiet "some text"
-# ruby opt.rb --verbose foo --force file.zzz
+# ruby subcommand.rb help
+# ruby subcommand.rb --help
+# ruby subcommand.rb help foo
+# ruby subcommand.rb foo --help
+# ruby subcommand.rb baz --quiet "some text"
+# ruby subcommand.rb --verbose foo --force file.zzz
 #
 # == STEPS 
 #    1. define global_options (optional)
@@ -136,7 +136,7 @@ module Subcommands
     @global.order!
     cmd = ARGV.shift
     if cmd
-      puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
+      $stderr.puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
       sc = @commands[cmd] 
       #puts "sc: #{sc}: #{@commands}"
       unless sc
@@ -146,10 +146,11 @@ module Subcommands
           case alas
           when Array
             cmd = alas.shift
-            puts "Array cmd: #{cmd} "
-            ARGV.unshift alas.shift
-            puts "ARGV  #{ARGV} "
+            $stderr.puts "1Array cmd: #{cmd}, alas: #{alas} "
+            ARGV.unshift alas.shift unless alas.empty?
+            $stderr.puts "1ARGV  #{ARGV} "
           else
+            cmd = alas
           end
         end
         sc = @commands[cmd] if cmd
@@ -163,19 +164,23 @@ module Subcommands
         # else if help <command> then print its help GIT style (3)
         if !ARGV.empty? && cmd == "help"
           cmd = ARGV.shift
-          #puts " 110 help #{cmd}"
+          $stderr.puts " 110 help #{cmd}"
           sc = @commands[cmd]
           # if valid command print help, else print global help
+          unless sc
+            sc = _check_alias cmd
+          end
           if sc
             #puts " 111 help #{cmd}"
             puts sc.call
           else 
-            puts "Invalid command: #{cmd}"
+            # no help for this command XXX check for alias
+            puts "Invalid command: #{cmd}."
             puts @global
           end
         else
           # invalid command 
-          puts "Invalid command: #{cmd}"
+          puts "Invalid command: #{cmd}" unless cmd == "help"
           puts @global 
         end
         exit 0
@@ -185,6 +190,22 @@ module Subcommands
   end
   def alias_command name, *args
     @aliases[name.to_s] = args
+  end
+  def _check_alias cmd
+    alas = @aliases[cmd]
+    $stderr.puts "195 alas: #{alas} "
+    if alas
+      case alas
+      when Array
+        cmd = alas.shift
+        $stderr.puts "Array cmd: #{cmd} "
+        ARGV.unshift alas.shift unless alas.empty?
+        $stderr.puts "ARGV  #{ARGV} "
+      else
+        cmd = alas
+      end
+    end
+    sc = @commands[cmd] if cmd
   end
 end
 
@@ -217,6 +238,9 @@ if __FILE__ == $PROGRAM_NAME
       options[:quiet] = v
     end
   end
+  alias_command :bar, 'baz'
+  alias_command :boo, 'foo', '--force'
+  alias_command :zoo, 'foo', 'ruby'
 
   # do the parsing.
   cmd = opt_parse()
