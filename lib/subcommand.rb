@@ -21,7 +21,7 @@
 #    1. define global_options (optional)
 #
 #     global_options do |opts|
-#       opts.banner = "Usage: opt.rb [options] [subcommand [options]]"
+#       opts.banner = "Usage: #{$0} [options] [subcommand [options]]"
 #       opts.description = "Stupid program that does something"
 #       opts.separator ""
 #       opts.separator "Global options are:"
@@ -169,9 +169,10 @@ end
 if __FILE__ == $PROGRAM_NAME
   include Subcommands
   options = {}
+  appname = File.basename($0)
   # global is optional
   global_options do |opts|
-    opts.banner = "Usage: opt.rb [options] [subcommand [options]]"
+    opts.banner = "Usage: #{appname} [options] [subcommand [options]]"
     opts.description = "Stupid program that does something"
     opts.separator ""
     opts.separator "Global options are:"

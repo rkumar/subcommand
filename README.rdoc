@@ -25,19 +25,19 @@ Assuming a program "prog" with subcommands "del" and "add"
 
  if a program has subcommands foo and baz
 
-     ruby opt.rb help
-     ruby opt.rb --help
-     ruby opt.rb help foo
-     ruby opt.rb foo --help
-     ruby opt.rb baz --quiet "some text"
-     ruby opt.rb --verbose foo --force file.zzz
+     ruby subcommand.rb help
+     ruby subcommand.rb --help
+     ruby subcommand.rb help foo
+     ruby subcommand.rb foo --help
+     ruby subcommand.rb baz --quiet "some text"
+     ruby subcommand.rb --verbose foo --force file.zzz
 
 == STEPS 
 
     1. define global_options (optional)
 
      global_options do |opts|
-       opts.banner = "Usage: opt.rb [options] [subcommand [options]]"
+       opts.banner = "Usage: subcommand.rb [options] [subcommand [options]]"
        opts.description = "Stupid program that does something"
        opts.separator ""
        opts.separator "Global options are:"
@@ -51,7 +51,7 @@ Assuming a program "prog" with subcommands "del" and "add"
      command :foo do |opts|
        opts.banner = "Usage: foo [options]"
        opts.description = "desc for foo"
-       opts.on("-f", "--[no-]force", "force verbosely") do |v|
+       opts.on("-f", "--[no-]force", "force action") do |v|
          options[:force] = v
        end
      end
@@ -60,6 +60,32 @@ Assuming a program "prog" with subcommands "del" and "add"
      command :init, :create do |opts| ...
 
     3. call opt_parse()
+
+== Sample Output
+
+    $ ruby subcommand.rb help
+
+    Usage: subcommand.rb [options] [subcommand [options]]
+    Stupid program that does something
+
+    Global options are:
+        -v, --[no-]verbose               Run verbosely
+
+    Commands are:
+       foo : desc for foo
+       baz : desc for baz
+
+    Aliases: 
+       goo - foo
+
+    See 'subcommand.rb help COMMAND' for more information on a specific command.
+
+
+    $ ruby subcommand.rb help foo
+
+    Usage: foo [options]
+    desc for foo
+        -f, --[no-]force                 force action
 
 == Note on Patches/Pull Requests
  
