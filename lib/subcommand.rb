@@ -62,7 +62,6 @@ module Subcommands
   # Do repeatedly for each command
   # Yields the optionparser
   def command *names
-    #puts "inside command with #{names} "
     name = names.shift
     @commands ||= {}
     @aliases ||= {}
@@ -137,16 +136,15 @@ module Subcommands
     @global.order!
     cmd = ARGV.shift
     if cmd
-      #puts "Command: #{cmd} "
+      #puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
       sc = @commands[cmd] 
+      #puts "sc: #{sc}: #{@commands}"
+      #puts "sc: ="+@commands.include?(cmd)
       unless sc
         # see if an alias exists
-        #puts "sc nil #{@aliases} "
         alas = @aliases[cmd]
-        #puts "sc nil #{alas} "
         sc = @commands[alas] if alas
-        cmd = alas
-        #puts "sc nil #{sc} "
+        cmd = alas if alas
       end
       # if valid command parse the args
       if sc
@@ -154,17 +152,21 @@ module Subcommands
         sc.call.order!
       else
         # else if help <command> then print its help GIT style (3)
-        if !ARGV.empty? and cmd == "help"
+        if !ARGV.empty? && cmd == "help"
           cmd = ARGV.shift
+          #puts " 110 help #{cmd}"
           sc = @commands[cmd]
           # if valid command print help, else print global help
           if sc
-            #puts " 111 help foo/baz"
+            #puts " 111 help #{cmd}"
             puts sc.call
-          else puts @global
+          else 
+            puts "Invalid command: #{cmd}"
+            puts @global
           end
         else
           # invalid command 
+            puts "Invalid command: #{cmd}"
           puts @global 
         end
         exit 0
