@@ -95,8 +95,10 @@ module Subcommands
   # then parse subcommand options if valid subcommand
   # special case of "help command" so we print help of command - git style (3)
   # in all invalid cases print global help
+  # @return command name if relevant
   def opt_parse
     # if user has not defined global, we need to create it
+    @command_name = nil
     if !defined? @global
       global_options do |opts|
         opts.banner = "Usage: #{$0} [options] [subcommand [options]]"
@@ -143,10 +145,12 @@ module Subcommands
         alas = @aliases[cmd]
         #puts "sc nil #{alas} "
         sc = @commands[alas] if alas
+        cmd = alas
         #puts "sc nil #{sc} "
       end
       # if valid command parse the args
       if sc
+        @command_name = cmd
         sc.call.order!
       else
         # else if help <command> then print its help GIT style (3)
@@ -166,6 +170,7 @@ module Subcommands
         exit 0
       end
     end
+    return @command_name
   end
 end
 
@@ -200,8 +205,9 @@ if __FILE__ == $PROGRAM_NAME
   end
 
   # do the parsing.
-  opt_parse()
+  cmd = opt_parse()
 
+  puts "cmd: #{cmd}"
   puts "options ......"
   p options
   puts "ARGV:"
