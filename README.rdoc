@@ -87,6 +87,12 @@ Assuming a program "prog" with subcommands "del" and "add"
     desc for foo
         -f, --[no-]force                 force action
 
+== Install
+
+   sudo gem install subcommand
+
+Or, copy into your lib directory and require (see source for sample usage)
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
