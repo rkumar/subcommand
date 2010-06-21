@@ -3,6 +3,8 @@
 A tiny wrapper over ruby's awesome OptionParser (standard) which gives easy facility of subcommands.
 It has a similar interface to git and prints subcommands summary as well.
 
+Options parsers are lazy-loaded thanks to a suggestion and sample code by Robert Klemme on ruby-forum.org.
+
 == Features:
 
 1. subcommands using all of OptionParser's features
@@ -95,6 +97,15 @@ Assuming a program "prog" with subcommands "del" and "add"
    sudo gem install subcommand
 
 Or, copy into your lib directory and require (see source for sample usage)
+
+== Testing
+
+This comes with a bunch of test cases, that I think cover all cases including printing help
+for aliases.
+
+    make test
+
+You should have no errors. The test cases are in the **tests** folder.
 
 == Note on Patches/Pull Requests
  
