@@ -12,6 +12,7 @@ Stupid program that does something
 
 Global options are:
     -v, --[no-]verbose               Run verbosely
+    -h, --help                       Print this help
 
 Commands are:
    foo : desc for foo
@@ -26,12 +27,15 @@ Aliases:
 
 See 'bin/subcommand.rb help COMMAND' for more information on a specific command.
 >>> end
+>>> end
+>>> end
 >>> ruby bin/subcommand.rb --help
 Usage: subcommand.rb [options] [subcommand [options]]
 Stupid program that does something
 
 Global options are:
     -v, --[no-]verbose               Run verbosely
+    -h, --help                       Print this help
 
 Commands are:
    foo : desc for foo
@@ -45,6 +49,8 @@ Aliases:
 
 
 See 'bin/subcommand.rb help COMMAND' for more information on a specific command.
+>>> end
+>>> end
 >>> end
 
 EOF

@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "CHANGELOG.rdoc",
      "LICENSE",
      "Makefile",
      "README.rdoc",
@@ -40,7 +41,9 @@ Gem::Specification.new do |s|
      "tests/t0006-goo_opt.sh",
      "tests/t0007-bar_baz.sh",
      "tests/t0008-boo_zoo.sh",
-     "tests/test-lib.sh"
+     "tests/test-lib.sh",
+     "tests/test.rb",
+     "tests/test1.rb"
   ]
   s.homepage = %q{http://github.com/rkumar/subcommand}
   s.rdoc_options = ["--charset=UTF-8"]
