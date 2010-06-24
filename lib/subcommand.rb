@@ -109,7 +109,6 @@ module Subcommands
   ## add text of subcommands in help and --help option
   def add_subcommand_help
     # user has defined some, but lets add subcommand information
-    # FIXME: EEKS this should only happen when help asked for.
 
     cmdtext = print_actions
 
