@@ -90,6 +90,49 @@ module Subcommands
       yield @global
     end
   end
+  def print_actions
+    cmdtext = "Commands are:"
+    @commands.each_pair do |c, opt| 
+      #puts "inside opt.call loop"
+      desc = opt.call.description
+      cmdtext << "\n   #{c} : #{desc}"
+    end
+
+    # print aliases
+    unless @aliases.empty?
+      cmdtext << "\n\nAliases: \n" 
+      @aliases.each_pair { |name, val| cmdtext << "   #{name} - #{val}\n"  }
+    end
+
+    cmdtext << "\n\nSee '#{$0} help COMMAND' for more information on a specific command."
+  end
+  ## add text of subcommands in help and --help option
+  def add_subcommand_help
+    # user has defined some, but lets add subcommand information
+    # FIXME: EEKS this should only happen when help asked for.
+
+    cmdtext = print_actions
+
+    global_options do |opts|
+      # lets add the description user gave into banner
+      opts.banner << "\n#{opts.description}\n" if opts.description
+      opts.separator ""
+      opts.separator cmdtext
+    end
+  end
+  # this is so that on pressing --help he gets same subcommand help as when doing help.
+  # This is to be added in your main program, after defining global options
+  # if you want detailed help on --help. This is since optionparser's default
+  # --help will not print your actions/commands
+  def add_help_option
+    global_options do |opts|
+      opts.on("-h", "--help", "Print this help") do |v|
+        add_subcommand_help
+        puts @global
+        exit
+      end
+    end
+  end
   # first parse global optinos
   # then parse subcommand options if valid subcommand
   # special case of "help command" so we print help of command - git style (3)
@@ -104,34 +147,14 @@ module Subcommands
         opts.separator ""
         opts.separator "Global options are:"
         opts.on("-h", "--help", "Print this help") do |v|
+          add_subcommand_help
           puts @global
           exit
         end
         opts.separator ""
-        opts.separator subtext
+        #opts.separator subtext # FIXME: no such variable supposed to have subcommand help
       end
     else
-      # user has defined some, but lets add subcommand information
-      cmdtext = "Commands are:"
-      @commands.each_pair do |c, opt| 
-        desc = opt.call.description
-        cmdtext << "\n   #{c} : #{desc}"
-      end
-      
-      # print aliases
-      unless @aliases.empty?
-        cmdtext << "\n\nAliases: \n" 
-        @aliases.each_pair { |name, val| cmdtext << "   #{name} - #{val}\n"  }
-      end
-
-      cmdtext << "\n\nSee '#{$0} help COMMAND' for more information on a specific command."
-
-      global_options do |opts|
-        # lets add the description user gave into banner
-        opts.banner << "\n#{opts.description}\n" if opts.description
-        opts.separator ""
-        opts.separator cmdtext
-      end
     end
     @global.order!
     cmd = ARGV.shift
@@ -163,11 +186,13 @@ module Subcommands
           else 
             # no help for this command XXX check for alias
             puts "Invalid command: #{cmd}."
+            add_subcommand_help
             puts @global
           end
         else
           # invalid command 
           puts "Invalid command: #{cmd}" unless cmd == "help"
+          add_subcommand_help
           puts @global 
         end
         exit 0
@@ -211,6 +236,7 @@ if __FILE__ == $PROGRAM_NAME
       options[:verbose] = v
     end
   end
+  add_help_option
   # define a command
   command :foo, :goo do |opts|
     opts.banner = "Usage: foo [options]"

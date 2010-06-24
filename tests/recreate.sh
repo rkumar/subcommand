@@ -24,10 +24,12 @@ echo "Using suffix:$str"
 read -p "press enter "
 grep '^>>> ' "$oldfile" | sed 's/^>>> //' 
 read -p "press enter "
+cp serial_numbers serial_numbers.xxx
 grep '^>>> ' "$oldfile" | sed 's/^>>> //' | ./rtest2.sh $LOADSTR "$str"
 
 echo
 echo renaming old file with O prefix
 mv "$oldfile" O$oldfile
+cp serial_numbers.xxx serial_numbers
 echo "If you don't find a test case, then rename transcript.txt to $oldfile"
 echo "cp transcript.txt $oldfile"
