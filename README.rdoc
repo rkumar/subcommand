@@ -70,6 +70,8 @@ Assuming a program "prog" with subcommands "del" and "add"
 
     3. call opt_parse()
 
+    selected_command_name = opt_parse()
+
 == Sample Output
 
     $ ruby subcommand.rb help
