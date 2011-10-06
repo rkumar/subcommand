@@ -1,3 +1,6 @@
+= subcommand 1.0.6 2011-10-6 
+* added list_actions to facilitate dynamic custom completion using compctl etc
+
 = subcommand 1.0.4 2010-06-24 15:51 
 * text for subcommands was being processed always before execution, so the
 point of lazy loading was lost. I've moved it away so it's only processed if
