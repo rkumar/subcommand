@@ -90,6 +90,14 @@ module Subcommands
       yield @global
     end
   end
+
+  # Added so applications can print out a bare listing of top level commands
+  #  for dynamic custom completion.
+  def list_actions
+    @commands.each_pair do |c, opt| puts c
+    end
+  end
+
   def print_actions
     cmdtext = "Commands are:"
     @commands.each_pair do |c, opt| 
