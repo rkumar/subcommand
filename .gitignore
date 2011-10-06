@@ -19,3 +19,17 @@ rdoc
 pkg
 
 ## PROJECT::SPECIFIC
+.yardoc/
+doc/
+index.html
+make.sh
+tests/Ot0001-main.sh
+tests/Ot0003-inv_comm.sh
+tests/clean.sh
+tests/serial_numbers
+tests/serial_numbers.bak
+tests/serial_numbers.xxx
+tests/tarme.sh
+tests/transcript.txt
+tests/trashdirectory.rtest2/
+todo
