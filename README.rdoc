@@ -72,6 +72,25 @@ Assuming a program "prog" with subcommands "del" and "add"
 
     selected_command_name = opt_parse()
 
+== Custom Completion
+   The command list_actions can be called from your application, so that the user
+   can have custom completion.
+
+    opts.on("--list-actions", "list actions for autocompletion ") do |v|
+      Subcommands::list_actions
+      exit 0
+    end
+
+  Now we can place something like this in a configuration file. Here's what i placed
+  in .zshrc for bugzyrb.
+
+    _bugzyrb() {
+            reply=(`bugzyrb --list-actions`)
+        }
+    compctl -K _bugzyrb bugzyrb
+
+  Now, on the command line when I type "bugzyrb <TAB>" the actions are prompted in a menu.
+
 == Sample Output
 
     $ ruby subcommand.rb help
