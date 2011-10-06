@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "subcommand"
     gem.summary = %Q{A tiny wrapper over OptionParser giving simple, elegant subcommand facility}
-    gem.description = %Q{Subcommand and alias facility for command line programs with elegant help printing}
+    gem.description = %Q{Subcommand and alias facility (wrapping OptionParser) for command line programs with elegant help printing}
     gem.email = "sentinel.1879@gmail.com"
     gem.homepage = "http://github.com/rkumar/subcommand"
     gem.authors = ["Rahul Kumar"]
