@@ -140,7 +140,7 @@ module Subcommands
       end
     end
   end
-  # first parse global optinos
+  # first parse global options
   # then parse subcommand options if valid subcommand
   # special case of "help command" so we print help of command - git style (3)
   # in all invalid cases print global help
