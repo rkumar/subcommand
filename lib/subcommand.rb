@@ -56,6 +56,9 @@ class OptionParser
 end
 
 module Subcommands
+
+  attr_accessor :appname
+
   ##
   # specify a single command and all its options
   # If multiple names are given, they are treated as aliases.
@@ -112,7 +115,7 @@ module Subcommands
       @aliases.each_pair { |name, val| cmdtext << "   #{name} - #{val}\n"  }
     end
 
-    cmdtext << "\n\nSee '#{$0} help COMMAND' for more information on a specific command."
+    cmdtext << "\n\nSee '#{appname || $0} help COMMAND' for more information on a specific command."
   end
   ## add text of subcommands in help and --help option
   def add_subcommand_help
@@ -150,7 +153,7 @@ module Subcommands
     @command_name = nil
     if !defined? @global
       global_options do |opts|
-        opts.banner = "Usage: #{$0} [options] [subcommand [options]]"
+        opts.banner = "Usage: #{appname || $0} [options] [subcommand [options]]"
         opts.separator ""
         opts.separator "Global options are:"
         opts.on("-h", "--help", "Print this help") do |v|
