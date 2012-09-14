@@ -5,9 +5,9 @@
 # as well as summarizes subcommands in global help.
 #
 # Thanks to Robert Klemme for his idea on lazy loading the subcommand option parsers.
-# 
+#
 # @author Rahul Kumar, Jun  2010
-# @date 2010-06-20 22:33 
+# @date 2010-06-20 22:33
 #
 # @examples
 # if a program has subcommands foo and baz
@@ -19,7 +19,7 @@
 # ruby subcommand.rb baz --quiet "some text"
 # ruby subcommand.rb --verbose foo --force file.zzz
 #
-# == STEPS 
+# == STEPS
 #    1. define global_options (optional)
 #
 #     global_options do |opts|
@@ -66,7 +66,7 @@ module Subcommands
     @commands ||= {}
     @aliases ||= {}
     if names.length > 0
-      names.each do |n| 
+      names.each do |n|
         #puts "aliases #{n} => #{name} "
         @aliases[n.to_s] = name.to_s
       end
@@ -91,6 +91,7 @@ module Subcommands
     end
   end
 
+
   # Added so applications can print out a bare listing of top level commands
   #  for dynamic custom completion.
   def list_actions
@@ -100,7 +101,7 @@ module Subcommands
 
   def print_actions
     cmdtext = "Commands are:"
-    @commands.each_pair do |c, opt| 
+    @commands.each_pair do |c, opt|
       #puts "inside opt.call loop"
       desc = opt.call.description
       cmdtext << "\n   #{c} : #{desc}"
@@ -108,7 +109,7 @@ module Subcommands
 
     # print aliases
     unless @aliases.empty?
-      cmdtext << "\n\nAliases: \n" 
+      cmdtext << "\n\nAliases: \n"
       @aliases.each_pair { |name, val| cmdtext << "   #{name} - #{val}\n"  }
     end
 
@@ -140,6 +141,12 @@ module Subcommands
       end
     end
   end
+
+  def print_help
+    add_subcommand_help
+    puts @global
+  end
+
   # first parse global optinos
   # then parse subcommand options if valid subcommand
   # special case of "help command" so we print help of command - git style (3)
@@ -154,8 +161,7 @@ module Subcommands
         opts.separator ""
         opts.separator "Global options are:"
         opts.on("-h", "--help", "Print this help") do |v|
-          add_subcommand_help
-          puts @global
+          print_help
           exit
         end
         opts.separator ""
@@ -167,7 +173,7 @@ module Subcommands
     cmd = ARGV.shift
     if cmd
       #$stderr.puts "Command: #{cmd}, args:#{ARGV}, #{@commands.keys} "
-      sc = @commands[cmd] 
+      sc = @commands[cmd]
       #puts "sc: #{sc}: #{@commands}"
       unless sc
         # see if an alias exists
@@ -190,20 +196,22 @@ module Subcommands
           if sc
             #puts " 111 help #{cmd}"
             puts sc.call
-          else 
+          else
             # no help for this command XXX check for alias
             puts "Invalid command: #{cmd}."
-            add_subcommand_help
-            puts @global
+            print_help
           end
         else
-          # invalid command 
+          # invalid command
           puts "Invalid command: #{cmd}" unless cmd == "help"
-          add_subcommand_help
-          puts @global 
+          print_help
         end
         exit 0
       end
+    else
+      puts "Empty command!"
+      print_help
+      exit 1
     end
     return @command_name
   end
