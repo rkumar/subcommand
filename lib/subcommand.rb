@@ -135,8 +135,7 @@ module Subcommands
   def add_help_option
     global_options do |opts|
       opts.on("-h", "--help", "Print this help") do |v|
-        add_subcommand_help
-        puts @global
+        print_help
         exit
       end
     end
