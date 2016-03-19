@@ -6,7 +6,7 @@
 point of lazy loading was lost. I've moved it away so it's only processed if
 actually printing help.
 
-Howeve, this means that if you are relying on OptionParser's implicit --help,
+However, this means that if you are relying on OptionParser's implicit --help,
 that won't print subcommands. So i've added a method add_help_option which
 adds a correct help option, to print subcommands. This way, command help and
 command --help print identical output.
