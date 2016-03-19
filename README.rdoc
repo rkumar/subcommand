@@ -148,4 +148,8 @@ http://subcommand.rubyforge.org/doc/
 
 == Copyright
 
-Copyright (c) 2010 Rahul Kumar. See LICENSE for details.
+Copyright (c) 2010-2016 Rahul Kumar. See LICENSE for details.
+
+== Others
+
+This simple gem is still working fine. No need for a new release.
