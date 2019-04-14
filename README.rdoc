@@ -1,7 +1,7 @@
-
 = Subcommand
 
 A tiny wrapper over ruby's awesome OptionParser (standard) which gives easy facility of subcommands.
+
 It has a similar interface to git and prints subcommands summary as well.
 
 Options parsers are lazy-loaded thanks to a suggestion and sample code by Robert Klemme on ruby-forum.org.
@@ -38,7 +38,7 @@ Assuming a program "prog" with subcommands "del" and "add"
      ruby subcommand.rb baz --quiet "some text"
      ruby subcommand.rb --verbose foo --force file.zzz
 
-== STEPS 
+== STEPS
 
     1. define global_options (optional)
 
@@ -105,7 +105,7 @@ Assuming a program "prog" with subcommands "del" and "add"
        foo : desc for foo
        baz : desc for baz
 
-    Aliases: 
+    Aliases:
        goo - foo
 
     See 'subcommand.rb help COMMAND' for more information on a specific command.
@@ -136,20 +136,11 @@ You should have no errors. The test cases are in the **tests** folder.
 
 http://subcommand.rubyforge.org/doc/
 
-== Note on Patches/Pull Requests
- 
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
-
 == Copyright
 
-Copyright (c) 2010-2016 Rahul Kumar. See LICENSE for details.
+Copyright (c) 2010-2019 Rahul Kumar. See LICENSE for details.
 
 == Others
 
 This simple gem is still working fine. No need for a new release.
+Working with ruby 1.9 through 2.6.
