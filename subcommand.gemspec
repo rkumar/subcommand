@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors = [%q{Rahul Kumar}]
   s.date = %q{2011-10-06}
   s.description = %q{Subcommand and alias facility (wrapping OptionParser) for command line programs with elegant help printing}
-  s.email = %q{sentinel.1879@gmail.com}
+  s.email = %q{oneness.univ@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
     "README.rdoc",
