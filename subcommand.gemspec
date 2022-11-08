@@ -1,14 +1,11 @@
-# -*- encoding: utf-8 -*-
-
 Gem::Specification.new do |s|
-  s.name = 'subcommand'
-  s.version = '1.0.7'
+  s.name = "subcommand"
+  s.version = "1.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Rahul Kumar}]
-  s.date = %q{2011-10-06}
-  s.description = %q{Subcommand and alias facility (wrapping OptionParser) for command line programs with elegant help printing}
-  s.email = %q{oneness.univ@gmail.com}
+  s.authors = ["Rahul Kumar"]
+  s.description = "Subcommand and alias facility (wrapping OptionParser) for command line programs with elegant help printing"
+  s.email = "oneness.univ@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.rdoc",
@@ -41,20 +38,20 @@ Gem::Specification.new do |s|
     "tests/test.rb",
     "tests/test1.rb"
   ]
-  s.homepage = %q{http://github.com/rkumar/subcommand}
-  s.require_paths = [%q{lib}]
-  s.rubyforge_project = %q{subcommand}
-  s.summary = %q{A tiny wrapper over OptionParser giving simple, elegant subcommand facility}
+  s.homepage = "http://github.com/rkumar/subcommand"
+  s.require_paths = ["lib"]
+  s.rubyforge_project = "subcommand"
+  s.summary = "A tiny wrapper over OptionParser giving simple, elegant subcommand facility"
 
-  if s.respond_to? :specification_version then
-    s.specification_version = 3
+  if s.respond_to? :specification_version
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<yard>, [">= 0"])
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new("1.2.0")
+      s.add_development_dependency("yard", [">= 0"])
     else
-      s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency("yard", [">= 0"])
     end
   else
-    s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency("yard", [">= 0"])
   end
+  s.metadata["rubygems_mfa_required"] = "true"
 end
