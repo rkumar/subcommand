@@ -18,129 +18,129 @@ This wrapper adds the `description` attr to what OptionParser already provides.
 e.g
 Assuming a program "prog" with subcommands "del" and "add"
 
-    prog help
-    prog --help
+prog help
+prog --help
 
-    prog help del
-    prog del --help
+prog help del
+prog del --help
 
-    prog del --force file.a
-    prog --verbose del --force file.a
+prog del --force file.a
+prog --verbose del --force file.a
 
 == Examples
 
- if a program has subcommands foo and baz
+if a program has subcommands foo and baz
 
-     ruby subcommand.rb help
-     ruby subcommand.rb --help
-     ruby subcommand.rb help foo
-     ruby subcommand.rb foo --help
-     ruby subcommand.rb baz --quiet "some text"
-     ruby subcommand.rb --verbose foo --force file.zzz
+ruby subcommand.rb help
+ruby subcommand.rb --help
+ruby subcommand.rb help foo
+ruby subcommand.rb foo --help
+ruby subcommand.rb baz --quiet "some text"
+ruby subcommand.rb --verbose foo --force file.zzz
 
 == STEPS
 
-    1. define global_options (optional)
+1. define global_options (optional)
 
-     global_options do |opts|
-       opts.banner = "Usage: subcommand.rb [options] [subcommand [options]]"
-       opts.description = "Stupid program that does something"
-       opts.separator ""
-       opts.separator "Global options are:"
-       opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-         options[:verbose] = v
-       end
-     end
+    global_options do |opts|
+    opts.banner = "Usage: subcommand.rb [options] [subcommand [options]]"
+    opts.description = "Stupid program that does something"
+    opts.separator ""
+    opts.separator "Global options are:"
+    opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    options[:verbose] = v
+    end
+    end
 
     2. define commands using command(). Send multiple names for aliases.
 
-     command :foo do |opts|
-       opts.banner = "Usage: foo [options]"
-       opts.description = "desc for foo"
-       opts.on("-f", "--[no-]force", "force action") do |v|
-         options[:force] = v
-       end
-     end
-
-     # aliases init and create
-     command :init, :create do |opts| ...
-
-     alias_command :zoo, 'foo' , '-f'
-     alias_command :bar, 'baz' , 'ruby.txt'
-
-    3. call opt_parse()
-
-    selected_command_name = opt_parse()
-
-== Custom Completion
-   The command list_actions can be called from your application, so that the user
-   can have custom completion.
-
-    opts.on("--list-actions", "list actions for autocompletion ") do |v|
-      Subcommands::list_actions
-      exit 0
+    command :foo do |opts|
+    opts.banner = "Usage: foo [options]"
+    opts.description = "desc for foo"
+    opts.on("-f", "--[no-]force", "force action") do |v|
+    options[:force] = v
+    end
     end
 
-  Now we can place something like this in a configuration file. Here's what i placed
-  in .zshrc for bugzyrb.
+# aliases init and create
+    command :init, :create do |opts| ...
+
+    alias_command :zoo, 'foo' , '-f'
+    alias_command :bar, 'baz' , 'ruby.txt'
+
+3. call opt_parse()
+
+selected_command_name = opt_parse()
+
+    == Custom Completion
+    The command list_actions can be called from your application, so that the user
+    can have custom completion.
+
+    opts.on("--list-actions", "list actions for autocompletion ") do |v|
+    Subcommands::list_actions
+    exit 0
+    end
+
+    Now we can place something like this in a configuration file. Here's what i placed
+    in .zshrc for bugzyrb.
 
     _bugzyrb() {
-            reply=(`bugzyrb --list-actions`)
-        }
-    compctl -K _bugzyrb bugzyrb
+        reply=(`bugzyrb --list-actions`)
+    }
+compctl -K _bugzyrb bugzyrb
 
-  Now, on the command line when I type "bugzyrb <TAB>" the actions are prompted in a menu.
+Now, on the command line when I type "bugzyrb <TAB>" the actions are prompted in a menu.
 
 == Sample Output
 
-    $ ruby subcommand.rb help
+$ ruby subcommand.rb help
 
-    Usage: subcommand.rb [options] [subcommand [options]]
-    Stupid program that does something
+Usage: subcommand.rb [options] [subcommand [options]]
+Stupid program that does something
 
-    Global options are:
-        -v, --[no-]verbose               Run verbosely
+Global options are:
+-v, --[no-]verbose               Run verbosely
 
-    Commands are:
-       foo : desc for foo
-       baz : desc for baz
+Commands are:
+foo : desc for foo
+baz : desc for baz
 
-    Aliases:
-       goo - foo
+Aliases:
+goo - foo
 
-    See 'subcommand.rb help COMMAND' for more information on a specific command.
+See 'subcommand.rb help COMMAND' for more information on a specific command.
 
 
-    $ ruby subcommand.rb help foo
+$ ruby subcommand.rb help foo
 
-    Usage: foo [options]
-    desc for foo
-        -f, --[no-]force                 force action
+Usage: foo [options]
+desc for foo
+-f, --[no-]force                 force action
 
 == Install
 
-   sudo gem install subcommand
+sudo gem install subcommand
 
 Or, copy into your lib directory and require (see source for sample usage)
 
-== Testing
+    == Testing
 
-This comes with a bunch of test cases, that I think cover all cases including printing help
-for aliases.
+    This comes with a bunch of test cases, that I think cover all cases including printing help
+    for aliases.
 
     make test
 
-You should have no errors. The test cases are in the **tests** folder.
+    You should have no errors. The test cases are in the **tests** folder.
 
-== RDOC
+    == RDOC
 
-http://subcommand.rubyforge.org/doc/
+    http://subcommand.rubyforge.org/doc/
 
-== Copyright
+    == Copyright
 
-Copyright (c) 2010-2019 Rahul Kumar. See LICENSE for details.
+    Copyright (c) 2010-2019 Rahul Kumar. See LICENSE for details.
 
-== Others
+    == Others
 
-This simple gem is still working fine. No need for a new release.
-Working with ruby 1.9 through 2.6.
+    This simple gem is still working fine. No need for a new release.
+    Working with ruby 1.9 through 2.6. And now ruby 3.1.2p20.
